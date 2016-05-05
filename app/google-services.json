@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "1025181789070",
+    "project_id": "simple-gcm-3922d"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025181789070:android:b90b739bbb1a1b77",
+        "android_client_info": {
+          "package_name": "com.baculsoft.gcm.simple"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVFwd9vAnZP-QeZTqw5OlCU2tg5ciQmVk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
