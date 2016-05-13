@@ -1,2 +1,1 @@
-# simple-gcm
-Simple Google Cloud Messaging
+# Simple Google Cloud Messaging (Android Client Side)
