@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.baculsoft.gcm.simple.App;
 import com.baculsoft.gcm.simple.R;
@@ -21,6 +23,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -29,11 +32,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    Button mButtonSend;
+    public TextView mTvMessage;
+    public Button mBtnSend;
 
     private boolean isReceiverRegistered;
     private String mSenderId;
-    private AtomicInteger messageId;
+    private AtomicInteger mMessageId;
     private BroadcastReceiver mBroadcastReceiver;
     private GoogleCloudMessaging mGoogleCloudMessaging;
 
@@ -42,22 +46,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        messageId = new AtomicInteger();
+        mMessageId = new AtomicInteger();
         mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(this);
-        mButtonSend = (Button) findViewById(R.id.btn_send);
+        mTvMessage = (TextView) findViewById(R.id.tv_message);
+        mBtnSend = (Button) findViewById(R.id.btn_send);
 
-        mButtonSend.setOnClickListener(new View.OnClickListener() {
+        mBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                try {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("message", "Hai It's Me!");
-                    String id = Integer.toString(messageId.incrementAndGet());
-                    mSenderId = App.getContext().getResources().getString(R.string.gcm_defaultSenderId);
-                    mGoogleCloudMessaging.send(mSenderId.concat("@gcm.googleapis.com"), id, bundle);
-                } catch (Exception e) {
-                    Log.e(TAG, e.getMessage(), e);
-                }
+            public void onClick(View view) {
+                new AsyncTask<Void, Void, String>() {
+                    @Override
+                    protected String doInBackground(Void... params) {
+                        String message;
+
+                        try {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("title", "New Client Message");
+                            bundle.putString("message", "Halo GCM Client!");
+                            String id = Integer.toString(mMessageId.incrementAndGet());
+                            mSenderId = App.getContext().getResources().getString(R.string.gcm_defaultSenderId);
+                            mGoogleCloudMessaging.send(mSenderId.concat("@gcm.googleapis.com"), id, bundle);
+                            message = "Sent Message";
+                        } catch (IOException e) {
+                            message = "Error Sent Message";
+                            Log.e(TAG, e.getMessage(), e);
+                        }
+
+                        return message;
+                    }
+
+                    @Override
+                    protected void onPostExecute(String message) {
+                        mTvMessage.append(message.concat("\n"));
+                    }
+                }.execute(null, null, null);
             }
         });
 

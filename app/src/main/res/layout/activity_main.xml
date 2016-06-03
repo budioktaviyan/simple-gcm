@@ -3,17 +3,25 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/primary"
+                android:fitsSystemWindows="true"
                 tools:context="com.baculsoft.gcm.simple.view.MainActivity">
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
 
     <Button
         android:id="@+id/btn_send"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@android:color/holo_green_light"
-        android:padding="15dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/accent"
         android:text="@string/btn_send"
         android:textAllCaps="true"
         android:textColor="@color/primary"
+        android:textSize="18sp"
         android:textStyle="bold"/>
 </RelativeLayout>
