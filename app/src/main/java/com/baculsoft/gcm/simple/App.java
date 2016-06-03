@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
+ */
 public class App extends Application {
     private static final String TAG = App.class.getSimpleName();
 
@@ -16,7 +19,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CONTEXT = getApplicationContext();
         Log.i(TAG, "onCreate");
+        CONTEXT = getApplicationContext();
     }
 }

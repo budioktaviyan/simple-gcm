@@ -23,6 +23,9 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 

@@ -24,11 +24,12 @@ public class SimpleGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         Log.w(TAG, "onMessageReceived");
+        String title = data.getString("title");
         String message = data.getString("message");
-        sendNotification(message);
+        sendNotification(title, message);
     }
 
-    private void sendNotification(String message) {
+    private void sendNotification(String title, String message) {
         Intent intent = new Intent(App.getContext(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -37,13 +38,13 @@ public class SimpleGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(App.getContext());
         notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
-        notificationBuilder.setContentTitle("New Message");
+        notificationBuilder.setContentTitle(title);
         notificationBuilder.setContentText(message);
         notificationBuilder.setAutoCancel(true);
         notificationBuilder.setSound(defaultSoundUri);
         notificationBuilder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notificationBuilder.build());
+        notificationManager.notify(1000, notificationBuilder.build());
     }
 }
